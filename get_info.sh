@@ -1,3 +1,3 @@
 #!/bin/sh
 
-parallel-ssh 
+parallel-ssh -i -h
