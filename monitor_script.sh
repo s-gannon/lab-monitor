@@ -1,7 +1,7 @@
 #!/bin/sh
 top -o -%CPU -b -n 1 | tail -3 | tac > processes.txt
 #	5 numbers from the CPU column
-top -o -%CPU -b -n 1 | tail -5 | awk '{print $9}' > total_cpu.txt
+cat processes.txt | awk '{print $9}' > total_cpu.txt
 #	$2 -> TOTAL RAM $3 -> USED RAM
 #free -g | grep Mem | awk '{print $2","$3}' > total_gpu.txt
 
