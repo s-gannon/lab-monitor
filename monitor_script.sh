@@ -8,7 +8,7 @@ cat processes.txt | awk '{print $9}' > total_cpu.txt
 
 hostname | awk '{print "hostname,"$1}' > data.csv	#hostname
 ifconfig | grep 'inet 10' | awk '{print "address," $2}' >> data.csv	#address
-#alive
+awk '{print "alive,true"}' >> data.csv	#alive
 paste -s -d+ total_cpu.txt | bc | awk '{print "cpu," $1}' >> data.csv
 free -g | grep Mem | awk '{print "max_ram," $2}' >> data.csv	#max RAM
 free -g | grep Mem | awk '{print "cur_ram," $3}' >> data.csv	#used RAM
