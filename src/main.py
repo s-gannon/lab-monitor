@@ -174,7 +174,7 @@ def main(stdscr):
     while True:  #change later to while button hit is not escape or control + c or something like that
         germain = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
         germain_cell.print_cell_text(0, 0, stdscr)
-        germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
+        germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data2.csv", ))[0]
         germain_cell2.print_cell_text(0, 18, stdscr)
         #title, info = cell_text[0], cell_text[1]
         #stdscr.addstr(0, 0, title, curses.color_pair(1))
