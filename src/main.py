@@ -1,9 +1,12 @@
-from math import floor
 from Computer import Computer
+import console_colors as cc
+
+import time
 import curses
 from curses import wrapper
+from math import floor
 import pandas as pd
-import console_colors as cc
+
 _17X15 = (17, 15)  #minimum cell size
 
 stdscr = curses.initscr()
@@ -13,24 +16,20 @@ curses.cbreak()
 _max_x = curses.COLS - 1
 _max_y = curses.LINES - 1
 
-
 def get_bar_v(height):
     bar = ""
     for i in range(height):
         bar += '|\n'
     return bar
 
-
 """
-Cell class
+Class Name:     Cell
 
-Used to display the computer information 
-onto the screen in an 
+Description:    Used to display the computer information 
+                onto the screen in an organized fashion
 """
 
 class Cell:
-    over = "|OVER!|"
-
     def __init__(self, current: Computer) -> None:
         self.com = current
         self.x = 0
@@ -39,32 +38,31 @@ class Cell:
         self.height = 0
 
     def get_bar_text(self, max_val, current_val, max_size) -> str:
+        bar = "|"
         if current_val > max_val:
-            return Cell.over
-        bar = '|'
-        bar += ("▩" if
-                (int(current_val) >= round(float(max_val))) else "▩") * floor(
-                    (float(current_val) / float(max_val)) * max_size)
-        bar += " " * (max_size - len(bar))
+            bar += center_text_w("OVER!", max_size)
+        else:
+            bar += "▇" * floor((float(current_val) / float(max_val)) * max_size)
+            bar += " " * (max_size - len(bar))
         bar += "|"
         return bar
 
     def print_cell_text(self, y, x, stdscr) -> str:
         """
-          return dict({
-              "Hostname": self.host,
-              "IP": self.addr,
-              "MaxRAM": self.max_ram,
-              "CurrentCPU": self.current_cpu,
-              "CurrentRAM": self.current_ram
-          })
+        return dict({
+            "Hostname": self.host,
+            "IP": self.addr,
+            "MaxRAM": self.max_ram,
+            "CurrentCPU": self.current_cpu,
+            "CurrentRAM": self.current_ram
+        })
         """
         dict = self.com.dictionary()
         dict_t = self.com.task_dct()
 
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
-        # Returns a cell that has a fancy looking UI
+
         lp = 0  #lines printed for positioning
 
         stdscr.addstr(
@@ -91,34 +89,13 @@ class Cell:
         stdscr.addstr(y + lp, x, f"""{self.center_text("TOP TASKS")}|"""); lp += 1
         stdscr.addstr(y + lp, x, f"""1. {dict_t["Task1"][0][0:13]} |"""); lp += 1
         stdscr.addstr(y + lp, x, f"""CPU: {self.get_bar_text(100, float(dict_t["Task1"][1]), 5)} {int(float(dict_t["Task1"][1]))}%  |"""); lp += 1
-        stdscr.addstr(y + lp, x, f"""{self.center_text(self.get_dividing_bar()[:self.width//2])} |"""); lp += 1
+        stdscr.addstr(y + lp, x, f"""{self.center_text(self.get_dividing_bar()[:self.width])}|"""); lp += 1
         stdscr.addstr(y + lp, x, f"""2. {dict_t["Task2"][0][0:13]} |"""); lp += 1
-        
         stdscr.addstr(y + lp, x, f"""CPU: {self.get_bar_text(100, float(dict_t["Task2"][1]), 5)} {int(float(dict_t["Task2"][1]))}%  |"""); lp += 1
-        stdscr.addstr(y + lp, x, f"""{self.center_text(self.get_dividing_bar()[:self.width//2])} |"""); lp += 1
+        stdscr.addstr(y + lp, x, f"""{self.center_text(self.get_dividing_bar()[:self.width])}|"""); lp += 1
         stdscr.addstr(y + lp, x, f"""3. {dict_t["Task3"][0][0:13]}\t |"""); lp += 1
         stdscr.addstr(y + lp, x, f"""CPU: {self.get_bar_text(100, float(dict_t["Task3"][1]), 5)} {int(float(dict_t["Task3"][1]))}%  |"""); lp += 1
         stdscr.addstr(y + lp, x, f"""{self.get_dividing_bar()}+""")
-
-   
-
-#         return [
-#             self.center_text(dict["Hostname"][0:self.width].upper()) + ' ',
-#             f"""CPU: {self.get_bar_text(100, float(dict["CurrentCPU"]), 5)} {int(float(dict["CurrentCPU"]))}%  |
-# RAM: {self.get_bar_text(int(dict["MaxRAM"]), int(dict["CurrentRAM"]), 5)}{dict["CurrentRAM"]}/{dict["MaxRAM"]} |
-# {self.get_dividing_bar()}|
-# {self.center_text("TOP TASKS")}|
-# 1. {dict_t["Task1"][0][0:13]} |
-# CPU: {self.get_bar_text(100, float(dict_t["Task1"][1]), 5)} {int(float(dict_t["Task1"][1]))}%  |
-# {self.center_text(self.get_dividing_bar()[:self.width//2])} |
-# 2. {dict_t["Task2"][0][0:13]} |
-# CPU: {self.get_bar_text(100, float(dict_t["Task2"][1]), 5)} {int(float(dict_t["Task2"][1]))}%  |
-# {self.center_text(self.get_dividing_bar()[:self.width//2])} |
-# 3. {dict_t["Task3"][0][0:13]}\t |
-# CPU: {self.get_bar_text(100, float(dict_t["Task3"][1]), 5)} {int(float(dict_t["Task3"][1]))}%  |
-# {self.get_dividing_bar()}+
-# """
-#         ]
 
     def get_dividing_bar(self) -> str:
         return "-" * self.width
@@ -158,7 +135,6 @@ class Cell:
                 [dict_t["Task2"][0][0:13], dict_t["Task2"][1]],
                 [dict_t["Task3"][0][0:13], dict_t["Task3"][1]]]
 
-
 def get_bash_cinfo_as_com(files) -> Computer:
     compu = []
     for i in range(len(files)):
@@ -172,18 +148,17 @@ def get_bash_cinfo_as_com(files) -> Computer:
                      info["task3_cpu"]))
     return compu
 
-
 def new_cell(computer, x, y, wh) -> Cell:
     cell = Cell(computer)
     cell.set_xy(int(x), int(y))
     cell.set_wh(wh)
     return cell
 
-
 def main(stdscr):
-    germain = get_bash_cinfo_as_com(("data.csv", ))[0]
+    germain = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
+    germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data2.csv", ))[0]
     germain_cell = new_cell(germain, 0, 0, _17X15)
-
+    germain_cell2 = new_cell(germain2, 0, 18, _17X15)
 
     # curses.init_pair(1, (curses.COLOR_BLACK if germain.dictionary()["Alive"]
     #                      else curses.COLOR_WHITE),
@@ -195,16 +170,17 @@ def main(stdscr):
     #                   if germain2.dictionary()["Alive"] else curses.COLOR_RED))
 
     stdscr.clear()
+
     while True:  #change later to while button hit is not escape or control + c or something like that
-        germain = get_bash_cinfo_as_com(("data.csv", ))[0]
+        germain = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
         germain_cell.print_cell_text(0, 0, stdscr)
+        germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
+        germain_cell2.print_cell_text(0, 18, stdscr)
         #title, info = cell_text[0], cell_text[1]
-
-
-       # stdscr.addstr(0, 0, title, curses.color_pair(1))
-
-
+        #stdscr.addstr(0, 0, title, curses.color_pair(1))
         stdscr.refresh()
+        time.sleep(10)
     curses.endwin()
+
 
 wrapper(main)
