@@ -15,8 +15,7 @@ class Computer:
         "Task1": [self.top_tasks[0], self.top_tasks_cpu[0]],
         "Task2": [self.top_tasks[1], self.top_tasks_cpu[1]],
         "Task3": [self.top_tasks[2], self.top_tasks_cpu[2]]   
-      })
-      
+      })    
     def dictionary(self) -> dict:
         return dict({
             "Hostname": self.host,
@@ -26,7 +25,4 @@ class Computer:
             "CurrentRAM": self.current_ram,
             "Tasks": self.task_dct(),
             "Alive": self.alive
-          
         })
-
-
