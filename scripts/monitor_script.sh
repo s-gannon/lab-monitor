@@ -11,7 +11,7 @@ cat processes.txt | awk '{print $9}' > $DATA_DIR/total_cpu.txt
 hostname | awk '{print "hostname,"$1}' > $DATA_DIR/data.csv	#hostname
 ifconfig | grep 'inet 10' | awk '{print "address," $2}' >> $DATA_DIR/data.csv	#address
 echo "alive,true" >> $DATA_DIR/data.csv	#alive; currently static to fix bug
-paste -s -d+ total_cpu.txt | bc | awk '{print "cpu," $1}' >> $DATA_DIR/data.csv
+paste -s -d+ $DATA_DIR/total_cpu.txt | bc | awk '{print "cpu," $1}' >> $DATA_DIR/data.csv
 free -g | grep Mem | awk '{print "max_ram," $2}' >> $DATA_DIR/data.csv	#max RAM
 free -g | grep Mem | awk '{print "cur_ram," $3}' >> $DATA_DIR/data.csv	#used RAM
 #	$9 -> CPU USAGE $10 -> GPU USAGE $12 -> TASK NAME
