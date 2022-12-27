@@ -155,6 +155,9 @@ def new_cell(computer, x, y, wh) -> Cell:
     return cell
 
 def main(stdscr):
+    germain = Computer()
+    katherine = Computer()
+    rockhopper = Computer()
     germain.path = "/home/lab-monitor/lab-monitor/data/data.csv"
     katherine.path = "/home/lab-monitor/lab-monitor/data/data3.csv"
     rockhopper.path = "/home/lab-monitor/lab-monitor/data/data4.csv"
