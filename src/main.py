@@ -135,7 +135,7 @@ class Cell:
                 [dict_t["Task2"][0][0:13], dict_t["Task2"][1]],
                 [dict_t["Task3"][0][0:13], dict_t["Task3"][1]]]
 
-def get_bash_cinfo_as_com(Computer: com) -> Computer:
+def get_bash_cinfo_as_com(com: Computer) -> Computer:
     compu = []
 
     df = pd.read_csv(com.path, header=None, index_col=0).squeeze("columns")
