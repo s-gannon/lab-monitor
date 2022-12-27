@@ -155,27 +155,31 @@ def new_cell(computer, x, y, wh) -> Cell:
     return cell
 
 def main(stdscr):
-    germain = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
-    germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data2.csv", ))[0]
-    germain_cell = new_cell(germain, 0, 0, _17X15)
-    germain_cell2 = new_cell(germain2, 0, 18, _17X15)
+    germain = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data.csv", ))[0]
+    katherine = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data2.csv", ))[0]
+    rockhopper = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data3.csv", ))[0]
+    germain_cell = new_cell(germain, 0, 18*0, _17X15)
+    katherine_cell = new_cell(katherine, 0, 18*1, _17X15)
+    rockhopper_cell = new_cell(rockhopper, 0, 18*2, _17X15)
 
-    # curses.init_pair(1, (curses.COLOR_BLACK if germain.dictionary()["Alive"]
+    # curses.init_pair(1, (curses.COLOR_BLACK if katherine.dictionary()["Alive"]
     #                      else curses.COLOR_WHITE),
     #                  (curses.COLOR_WHITE
-    #                   if germain.dictionary()["Alive"] else curses.COLOR_RED))
-    # curses.init_pair(1, (curses.COLOR_BLACK if germain2.dictionary()["Alive"]
+    #                   if katherine.dictionary()["Alive"] else curses.COLOR_RED))
+    # curses.init_pair(1, (curses.COLOR_BLACK if rockhopper.dictionary()["Alive"]
     #                      else curses.COLOR_WHITE),
     #                  (curses.COLOR_WHITE
-    #                   if germain2.dictionary()["Alive"] else curses.COLOR_RED))
+    #                   if rockhopper.dictionary()["Alive"] else curses.COLOR_RED))
 
     stdscr.clear()
 
     while True:  #change later to while button hit is not escape or control + c or something like that
-        germain = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data1.csv", ))[0]
-        germain_cell.print_cell_text(0, 0, stdscr)
-        germain2 = get_bash_cinfo_as_com(("/home/sgannon/Github/lab-monitor/test-data/test_data2.csv", ))[0]
-        germain_cell2.print_cell_text(0, 18, stdscr)
+        germain = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data3.csv", ))[0]
+        germain_cell.print_cell_text(0, 18*0, stdscr)
+        katherine = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data2.csv", ))[0]
+        katherine_cell.print_cell_text(0, 18*1, stdscr)
+        rockhopper = get_bash_cinfo_as_com(("/home/lab-monitor/lab-monitor/data/data3.csv", ))[0]
+        rockhopper_cell.print_cell_text(0, 18*2, stdscr)
         #title, info = cell_text[0], cell_text[1]
         #stdscr.addstr(0, 0, title, curses.color_pair(1))
         stdscr.refresh()
