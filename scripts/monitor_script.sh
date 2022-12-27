@@ -15,8 +15,8 @@ paste -s -d+ total_cpu.txt | bc | awk '{print "cpu," $1}' >> $DATA_DIR/data.csv
 free -g | grep Mem | awk '{print "max_ram," $2}' >> $DATA_DIR/data.csv	#max RAM
 free -g | grep Mem | awk '{print "cur_ram," $3}' >> $DATA_DIR/data.csv	#used RAM
 #	$9 -> CPU USAGE $10 -> GPU USAGE $12 -> TASK NAME
-awk '{i = i + 1; print "task" i "_name," $12 "\ntask" i "_cpu," $9}' processes.txt >> $DATA_DIR/data.csv	#tasks
+awk '{i = i + 1; print "task" i "_name," $12 "\ntask" i "_cpu," $9}' $DATA_DIR/processes.txt >> $DATA_DIR/data.csv	#tasks
 
 
-rm processes.txt
-rm total_cpu.txt
+rm $DATA_DIR/processes.txt
+rm $DATA_DIR/total_cpu.txt
