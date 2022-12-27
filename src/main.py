@@ -179,9 +179,9 @@ def main(stdscr):
     stdscr.clear()
 
     while True:  #change later to while button hit is not escape or control + c or something like that
-        germain = csv_to_com(germain)
-        katherine = csv_to_com(katherine)
-        rockhopper = csv_to_com(rockhopper)
+        germain = csv_to_com(germain.path)
+        katherine = csv_to_com(katherine.path)
+        rockhopper = csv_to_com(rockhopper.path)
         germain_cell = new_cell(germain, 0, 18*0, _17X15)
         katherine_cell = new_cell(katherine, 0, 18*1, _17X15)
         rockhopper_cell = new_cell(rockhopper, 0, 18*2, _17X15)
