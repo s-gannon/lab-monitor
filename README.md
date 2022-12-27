@@ -17,3 +17,4 @@ Monitors multiple PCs (Linux only), giving statistics such as CPU and RAM usage 
 
 ## Future Features
 - Dynamically sized windows / text
+- A graphical version using OpenGL or Vulkan alongside the CLI version
