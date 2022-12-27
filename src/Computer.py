@@ -10,6 +10,7 @@ class Computer:
         self.current_cpu = cpu
         self.current_ram = ram
         self.alive = (alive == 'true') 
+        self.path = ""
     def task_dct(self) -> dict:
       return dict({
         "Task1": [self.top_tasks[0], self.top_tasks_cpu[0]],
