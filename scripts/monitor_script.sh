@@ -3,7 +3,7 @@ DATA_DIR='../data/'
 
 top -o -%CPU -b -n 1 | tail -3 | tac > $DATA_DIR/processes.txt
 #	5 numbers from the CPU column
-cat processes.txt | awk '{print $9}' > $DATA_DIR/total_cpu.txt
+cat $DATA_DIR/processes.txt | awk '{print $9}' > $DATA_DIR/total_cpu.txt
 #	$2 -> TOTAL RAM $3 -> USED RAM
 #free -g | grep Mem | awk '{print $2","$3}' > total_gpu.txt
 
