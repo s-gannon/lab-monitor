@@ -135,18 +135,23 @@ class Cell:
                 [dict_t["Task2"][0][0:13], dict_t["Task2"][1]],
                 [dict_t["Task3"][0][0:13], dict_t["Task3"][1]]]
 
-def get_bash_cinfo_as_com(com: Computer) -> Computer:
-    compu = []
-
-    df = pd.read_csv(com.path, header=None, index_col=0).squeeze("columns")
+def csv_to_com(path) -> Computer:
+    df = pd.read_csv(path, header=None, index_col=0).squeeze("columns")
     info = df.to_dict()
-    compu.append(
-        Computer(info["alive"], info["hostname"], info["address"],
-                    info["max_ram"], info["cpu"], info["cur_ram"],
-                    info["task1_name"], info["task2_name"],
-                    info["task3_name"], info["task1_cpu"], info["task2_cpu"],
-                    info["task3_cpu"]))
-    return compu
+    com = Computer(info["alive"], 
+                    info["hostname"], 
+                    info["address"],
+                    info["max_ram"], 
+                    info["cpu"], 
+                    info["cur_ram"],
+                    info["task1_name"], 
+                    info["task2_name"],
+                    info["task3_name"], 
+                    info["task1_cpu"], 
+                    info["task2_cpu"],
+                    info["task3_cpu"])
+    com.path = path
+    return com
 
 def new_cell(computer, x, y, wh) -> Cell:
     cell = Cell(computer)
@@ -155,12 +160,12 @@ def new_cell(computer, x, y, wh) -> Cell:
     return cell
 
 def main(stdscr):
-    germain = Computer()
-    katherine = Computer()
-    rockhopper = Computer()
-    germain.path = "/home/lab-monitor/lab-monitor/data/data.csv"
-    katherine.path = "/home/lab-monitor/lab-monitor/data/data3.csv"
-    rockhopper.path = "/home/lab-monitor/lab-monitor/data/data4.csv"
+    germain_path = "/home/lab-monitor/lab-monitor/data/data.csv"
+    katherine_path = "/home/lab-monitor/lab-monitor/data/data3.csv"
+    rockhopper_path = "/home/lab-monitor/lab-monitor/data/data4.csv"
+    germain = csv_to_com(germain_path)[0]
+    katherine = csv_to_com(katherine_path)[0]
+    rockhopper = csv_to_com(rockhopper_path)[0]
 
     # curses.init_pair(1, (curses.COLOR_BLACK if katherine.dictionary()["Alive"]
     #                      else curses.COLOR_WHITE),
@@ -174,9 +179,9 @@ def main(stdscr):
     stdscr.clear()
 
     while True:  #change later to while button hit is not escape or control + c or something like that
-        germain = get_bash_cinfo_as_com(germain)[0]
-        katherine = get_bash_cinfo_as_com(katherine)[0]
-        rockhopper = get_bash_cinfo_as_com(rockhopper)[0]
+        germain = csv_to_com(germain)[0]
+        katherine = csv_to_com(katherine)[0]
+        rockhopper = csv_to_com(rockhopper)[0]
         germain_cell = new_cell(germain, 0, 18*0, _17X15)
         katherine_cell = new_cell(katherine, 0, 18*1, _17X15)
         rockhopper_cell = new_cell(rockhopper, 0, 18*2, _17X15)
@@ -185,7 +190,6 @@ def main(stdscr):
         rockhopper_cell.print_cell_text(0, 18*2, stdscr)
         #title, info = cell_text[0], cell_text[1]
         #stdscr.addstr(0, 0, title, curses.color_pair(1))
-        print(time.time())
         stdscr.refresh()
         time.sleep(1)
     curses.endwin()
