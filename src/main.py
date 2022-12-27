@@ -138,7 +138,7 @@ class Cell:
 def get_bash_cinfo_as_com(files) -> Computer:
     compu = []
     for i in range(len(files)):
-        df = pd.read_csv(files[i], header=None, index_col=0, squeeze=True)
+        df = pd.read_csv(files[i], header=None, index_col=0).squeeze("columns")
         info = df.to_dict()
         compu.append(
             Computer(info["alive"], info["hostname"], info["address"],
