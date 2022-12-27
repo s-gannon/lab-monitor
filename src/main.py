@@ -163,9 +163,9 @@ def main(stdscr):
     germain_path = "/home/lab-monitor/lab-monitor/data/data.csv"
     katherine_path = "/home/lab-monitor/lab-monitor/data/data3.csv"
     rockhopper_path = "/home/lab-monitor/lab-monitor/data/data4.csv"
-    germain = csv_to_com(germain_path)[0]
-    katherine = csv_to_com(katherine_path)[0]
-    rockhopper = csv_to_com(rockhopper_path)[0]
+    germain = csv_to_com(germain_path)
+    katherine = csv_to_com(katherine_path)
+    rockhopper = csv_to_com(rockhopper_path)
 
     # curses.init_pair(1, (curses.COLOR_BLACK if katherine.dictionary()["Alive"]
     #                      else curses.COLOR_WHITE),
@@ -179,9 +179,9 @@ def main(stdscr):
     stdscr.clear()
 
     while True:  #change later to while button hit is not escape or control + c or something like that
-        germain = csv_to_com(germain)[0]
-        katherine = csv_to_com(katherine)[0]
-        rockhopper = csv_to_com(rockhopper)[0]
+        germain = csv_to_com(germain)
+        katherine = csv_to_com(katherine)
+        rockhopper = csv_to_com(rockhopper)
         germain_cell = new_cell(germain, 0, 18*0, _17X15)
         katherine_cell = new_cell(katherine, 0, 18*1, _17X15)
         rockhopper_cell = new_cell(rockhopper, 0, 18*2, _17X15)
